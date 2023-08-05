@@ -13,6 +13,7 @@ public class QuestTime {
     public static final int HOUR = 72000;
     public static final int REAL_DAY = HOUR * 24;
     public static final int MINUTE = 1200;
+    public static final int SECOND = 20;
 
     protected QuestTime(int time) {
         this.time = time;
@@ -36,6 +37,11 @@ public class QuestTime {
     @Contract(value = "_ -> new", pure = true)
     public static @NotNull QuestTime byMinutes(int minutes) {
         return new QuestTime(MINUTE * minutes);
+    }
+
+    @Contract(value = "_ -> new", pure = true)
+    public static @NotNull QuestTime bySeconds(int seconds) {
+        return new QuestTime(SECOND * seconds);
     }
 
     @Contract(value = " -> new", pure = true)

@@ -7,18 +7,20 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 
+import java.io.Serializable;
 import java.util.Collection;
 
 import static net.aros.arosquests.ArosQuests.MOD_ID;
 
 public class SimpleQuest extends Quest {
-    private final Text name, author;
-    private final Collection<Text> description;
+    private final Text name, author, description;
     private final QuestTime defaultTime;
+    private final Integer authorColor;
 
-    public SimpleQuest(Text name, Text author, Collection<Text> description, QuestTime defaultTime) {
+    public SimpleQuest(Text name, Text author, Integer authorColor, Text description, QuestTime defaultTime) {
         this.name = name;
         this.author = author;
+        this.authorColor = authorColor;
         this.description = description;
         this.defaultTime = defaultTime;
     }
@@ -34,7 +36,12 @@ public class SimpleQuest extends Quest {
     }
 
     @Override
-    public Collection<Text> getDescription() {
+    public Integer getAuthorColor() {
+        return authorColor;
+    }
+
+    @Override
+    public Text getDescription() {
         return description;
     }
 

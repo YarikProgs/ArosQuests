@@ -1,21 +1,24 @@
 package net.aros.arosquests.util;
 
 import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 import org.jetbrains.annotations.Nullable;
 
 import static net.aros.arosquests.ArosQuests.MOD_ID;
 
 public enum QuestStatus {
-    NOT_STARTED(0),
-    COMPLETING(1),
-    COMPLETED(2),
-    FAILED(3),
-    FROZEN(4);
+    NOT_STARTED(0, null),
+    COMPLETING(1, Formatting.WHITE.getColorValue()),
+    COMPLETED(2, Formatting.GRAY.getColorValue()),
+    FAILED(3, Formatting.RED.getColorValue()),
+    FROZEN(4, Formatting.AQUA.getColorValue());
 
     private final int value;
+    private final Integer color;
 
-    QuestStatus(int value) {
+    QuestStatus(int value, Integer color) {
         this.value = value;
+        this.color = color;
     }
 
     public int asInt() {
@@ -35,5 +38,9 @@ public enum QuestStatus {
 
     public Text asText() {
         return Text.translatable("status." + MOD_ID + "." + this);
+    }
+
+    public Integer getColor() {
+        return color;
     }
 }

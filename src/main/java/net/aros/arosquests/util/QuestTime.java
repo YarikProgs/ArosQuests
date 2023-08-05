@@ -55,10 +55,15 @@ public class QuestTime {
 
     public Text getTimeAsText() {
         if (time == -1) return getTimeAsInfinite();
+        if (time < MINUTE) return getTimeAsSeconds();
         if (time < MINECRAFT_DAY) return getTimeAsMinutes();
         if (time < HOUR) return getTimeAsMinecraftDays();
         if (time < REAL_DAY) return getTimeAsHours();
         return getTimeAsRealDays();
+    }
+
+    public Text getTimeAsSeconds() {
+        return Text.literal(String.valueOf(time / SECOND)).append(" ").append(Text.translatable("time." + MOD_ID + ".seconds"));
     }
 
     public Text getTimeAsMinutes() {

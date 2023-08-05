@@ -20,6 +20,9 @@
   "entrypoints": {
     "main": [
       "net.aros.arosquests.ArosQuests"
+    ],
+    "client": [
+      "net.aros.arosquests.ArosQuestsClient"
     ]
   },
   "mixins": [

@@ -50,7 +50,7 @@ public class QuestState extends PersistentState {
         return state;
     }
 
-    private static QuestState getQuestData(ServerWorld world) {
+    private static QuestState getQuestState(ServerWorld world) {
         return world.getPersistentStateManager().getOrCreate(
                 QuestState::fromNbt,
                 QuestState::new,
@@ -64,13 +64,17 @@ public class QuestState extends PersistentState {
         return quests;
     }
 
+    public static Map<Quest, QuestInstance> getQuestData(ServerWorld world) {
+        return new HashMap<>(getQuestState(world).QUEST_DATA);
+    }
+
     public static QuestInstance getQuestInstance(Quest quest, ServerWorld world) {
-        return getQuestData(world).QUEST_DATA.get(quest);
+        return getQuestState(world).QUEST_DATA.get(quest);
     }
 
     public static void setQuestInstance(Quest quest, QuestInstance instance, @NotNull MinecraftServer server) {
         for (ServerWorld world : server.getWorlds()) {
-            var data = getQuestData(world);
+            var data = getQuestState(world);
             data.QUEST_DATA.replace(quest, instance);
             data.markDirty();
         }
@@ -78,7 +82,7 @@ public class QuestState extends PersistentState {
 
     public static void setQuestStatus(Quest quest, QuestStatus status, @NotNull MinecraftServer server) {
         for (ServerWorld world : server.getWorlds()) {
-            var data = getQuestData(world);
+            var data = getQuestState(world);
             data.QUEST_DATA.get(quest).setStatus(status, server);
             data.markDirty();
         }
@@ -86,7 +90,7 @@ public class QuestState extends PersistentState {
 
     public static void setQuestTime(Quest quest, int time, @NotNull MinecraftServer server) {
         for (ServerWorld world : server.getWorlds()) {
-            var data = getQuestData(world);
+            var data = getQuestState(world);
             data.QUEST_DATA.get(quest).setTime(time);
             data.markDirty();
         }

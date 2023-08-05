@@ -8,12 +8,11 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
-import java.util.Collection;
-
 public abstract class Quest {
     public abstract Text getName();
     public abstract Text getAuthor();
-    public abstract Collection<Text> getDescription();
+    public abstract Integer getAuthorColor();
+    public abstract Text getDescription();
     public abstract QuestTime getDefaultTime();
 
     public final Identifier getId() {

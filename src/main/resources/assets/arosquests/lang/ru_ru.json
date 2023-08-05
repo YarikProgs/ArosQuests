@@ -1,0 +1,15 @@
+{
+  "quest.arosquests.update": "Список квестов был обновлён",
+
+  "time.arosquests.minute": "Минут (-ы)",
+  "time.arosquests.hour": "Часа (-ов)",
+  "time.arosquests.minecraft_day": "Игровых дней",
+  "time.arosquests.real_day": "Дня (-ей)",
+  "time.arosquests.infinite": "Бессрочно",
+
+  "status.arosquests.not_started": "Не начался",
+  "status.arosquests.completing": "Проходится...",
+  "status.arosquests.completed": "Пройдено",
+  "status.arosquests.failed": "Провалено",
+  "status.arosquests.frozen": "Заморожено"
+}

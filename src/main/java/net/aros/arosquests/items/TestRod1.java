@@ -1,6 +1,5 @@
 package net.aros.arosquests.items;
 
-import net.aros.arosquests.init.AQQuests;
 import net.aros.arosquests.util.AQRegistry;
 import net.aros.arosquests.util.QuestStatus;
 import net.aros.arosquests.world.QuestState;
@@ -8,8 +7,6 @@ import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.TypedActionResult;

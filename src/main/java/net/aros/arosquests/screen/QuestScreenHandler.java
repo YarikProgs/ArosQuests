@@ -4,8 +4,6 @@ import net.aros.arosquests.init.AQScreenHandlers;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.ScreenHandler;
-import net.minecraft.screen.ScreenHandlerType;
-import org.jetbrains.annotations.Nullable;
 
 public class QuestScreenHandler extends ScreenHandler {
     public QuestScreenHandler() {

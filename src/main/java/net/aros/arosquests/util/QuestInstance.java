@@ -5,9 +5,6 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.server.MinecraftServer;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.*;
-import java.util.Arrays;
-
 public final class QuestInstance {
     private final Quest quest;
     private QuestStatus status;

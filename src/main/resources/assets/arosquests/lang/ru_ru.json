@@ -1,21 +1,22 @@
 {
   "quest.arosquests.update": "Список квестов был обновлён",
 
-  "time.arosquests.seconds": "Секунд (-ы)",
-  "time.arosquests.minutes": "Минут (-ы)",
-  "time.arosquests.hours": "Часа (-ов)",
+  "time.arosquests.seconds": "Секунд (-a)",
+  "time.arosquests.minutes": "Минут (-a)",
+  "time.arosquests.hours": "Час (-ов)",
   "time.arosquests.minecraft_day": "Игровых дней",
-  "time.arosquests.real_day": "Дня (-ей)",
+  "time.arosquests.real_days": "Дней (-я)",
   "time.arosquests.infinite": "Бессрочно",
 
   "status.arosquests.not_started": "Не начался",
-  "status.arosquests.completing": "Проходится...",
-  "status.arosquests.completed": "Пройдено",
+  "status.arosquests.completing": "Выполняется...",
+  "status.arosquests.completed": "Выполнено",
   "status.arosquests.failed": "Провалено",
   "status.arosquests.frozen": "Заморожено",
 
   "quest.arosquests.author": "Квестодатель",
   "quest.arosquests.status": "Статус",
   "quest.arosquests.description": "Описание",
+  "quest.arosquests.description.empty": "*пусто*",
   "quest.arosquests.time": "Срок выполнения: "
 }

@@ -1,4 +1,5 @@
 # ArosQuests
+![](src/main/resources/assets/arosquests/icon.png)
 ### By Aros
 Мод, способный показать как можно реализовать квесты и из которого всегда можно взять код
 

@@ -9,13 +9,13 @@ import net.minecraft.client.gui.screen.ingame.InventoryScreen;
 import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
 import net.minecraft.client.gui.widget.ClickableWidget;
 import net.minecraft.client.sound.SoundManager;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.text.OrderedText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -28,7 +28,6 @@ public class QuestTitleWidget extends ClickableWidget { // Мне лично у�
     public final TextRenderer renderer;
     private final QuestInstance instance;
     private final LivingEntity entity;
-    private double mouseX, mouseY;
     private final int x, y;
 
     public QuestTitleWidget(int x, int y, QuestInstance instance, TextRenderer renderer) {
@@ -68,8 +67,6 @@ public class QuestTitleWidget extends ClickableWidget { // Мне лично у�
     // Тут отрисовывается ВСЯ информация о квесте
     public void drawQuestInfo(DrawContext ctx, int x, int y) {
         // Texture
-        MatrixStack matrices = ctx.getMatrices();
-
         ctx.drawTexture(TEXTURE_1, x, y, 0, 0, 65 * 3, 65 * 3, 65 * 3, 65 * 3);
 
         Text author = Text.translatable("quest." + MOD_ID + ".author").append(": ");
@@ -98,8 +95,8 @@ public class QuestTitleWidget extends ClickableWidget { // Мне лично у�
 
         // Quest description
         ctx.drawTextWithShadow(renderer, description, x + 8, y + 114, white);
-        if (instance.getQuest().getDescription().getString().equals("")) {
-            ctx.drawTextWithShadow(renderer, Text.translatable("quest.arosquests.description.empty").copy().formatted(Formatting.ITALIC), x + 16, y + 126, Formatting.GRAY.getColorValue());
+        if (instance.getQuest().getDescription().getString().isEmpty()) {
+            ctx.drawTextWithShadow(renderer, Text.translatable("quest.arosquests.description.empty").copy().formatted(Formatting.ITALIC), x + 16, y + 126,11184810);
         } else {
             int i = 0;
             for (OrderedText text : renderer.wrapLines(instance.getQuest().getDescription(), 170)) {
@@ -112,9 +109,11 @@ public class QuestTitleWidget extends ClickableWidget { // Мне лично у�
         // Entity texture
         ctx.drawTexture(TEXTURE_2, x + 65 * 3, y, 0, 0, 43 * 3, 64 * 3, 43 * 3, 64 * 3);
 
-        int x_ = x + 65 * 3 + 65;
-        int y_ = y + 158;
-        InventoryScreen.drawEntity(ctx, x_, y_, x_ + 49, y_ + 70, 60, 0.0625f, (float) mouseX - 15, (float) mouseY - 5, entity);
+        int x1 = x + 210;
+        int y1 = y + 10;
+        int x2 = x1 + 49 * 2;
+        int y2 = y1 + 70 * 2;
+        InventoryScreen.drawEntity(ctx, x1, y1, x2, y2, 60, 0.0625f, (x1 + x2) / 2f - 40, (y1 + y2) / 2f + 20, entity);
 
         drawCenteredTextWithSize(ctx, Text.literal("[ ").append(instance.getQuest().getAuthor()).append(" ]"), x + 259, y + 167, instance.getQuest().getAuthorColor(), 1.5F);
     }
@@ -127,10 +126,11 @@ public class QuestTitleWidget extends ClickableWidget { // Мне лично у�
     }
 
     // Очень удобненько
-    protected void drawCenteredTextWithSize(DrawContext ctx, Text text, float x, float y, Integer color, float size) {
+    protected void drawCenteredTextWithSize(@NotNull DrawContext ctx, @NotNull Text text, float x, float y, Integer color, float size) {
         ctx.getMatrices().scale(size, size, size);
-        //drawCenteredTextWithShadow(matrices, renderer, text.asOrderedText(), Math.round(x/size), Math.round(y/size), color);
-        ctx.drawTextWithShadow(renderer, text, (int) ((x - renderer.getWidth(text) / 2.0F) / size - 7), (int) (y / size), color);
+        renderer.draw(text.asOrderedText(), (x - renderer.getWidth(text) / 2.0F) / size - 7, y / size, color,
+            true, ctx.getMatrices().peek().getPositionMatrix(), ctx.getVertexConsumers(),
+            TextRenderer.TextLayerType.NORMAL, 0, 15728880);
         ctx.getMatrices().scale(1 / size, 1 / size, 1 / size);
     }
 
@@ -153,12 +153,5 @@ public class QuestTitleWidget extends ClickableWidget { // Мне лично у�
     @Override
     public void playDownSound(SoundManager soundManager) {
 
-    }
-
-    // Отслеживаем мышь
-    @Override
-    public void mouseMoved(double mouseX, double mouseY) {
-        this.mouseX = mouseX;
-        this.mouseY = mouseY;
     }
 }

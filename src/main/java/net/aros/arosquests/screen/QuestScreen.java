@@ -111,11 +111,15 @@ public class QuestScreen extends Screen {
     }
 
     @Override
+    public void renderBackground(DrawContext context, int mouseX, int mouseY, float delta) {}
+
+    @Override
     public void render(DrawContext ctx, int mouseX, int mouseY, float delta) {
-        renderBackground(ctx, mouseX, mouseY, delta);
+        this.applyBlur(delta);
+        this.renderDarkening(ctx);
         drawBackground(ctx, delta, mouseX, mouseY);
         super.render(ctx, mouseX, mouseY, delta);
         for (StatusWidget widget : statusWidgets)
-            if (widget.isHovered()) ctx.drawTooltip(textRenderer, widget.getStatus().asText(), x, y);
+            if (widget.isHovered()) ctx.drawTooltip(textRenderer, widget.getStatus().asText(), mouseX, mouseY);
     }
 }

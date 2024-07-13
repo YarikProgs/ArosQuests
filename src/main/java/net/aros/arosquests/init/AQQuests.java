@@ -9,7 +9,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.registry.Registry;
 
 import static net.aros.arosquests.ArosQuests.MOD_ID;
 
@@ -35,7 +35,7 @@ public class AQQuests {
     public static final SimpleQuest Q13 = register("13_quest", new SimpleQuest(Text.literal("Квест №13"), Text.literal("???"), null, Formatting.BLACK.getColorValue(), Text.empty(), QuestTime.infinite()));
 
     static <T extends Quest> T register(String name, T quest) {
-        return Registry.register(AQRegistry.QUEST, new Identifier(MOD_ID, name), quest);
+        return Registry.register(AQRegistry.QUEST, Identifier.of(MOD_ID, name), quest);
     }
 
     public static void init() {}

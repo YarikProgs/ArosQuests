@@ -50,7 +50,7 @@ public class QuestCommand {
         Quest quest = Quest.byId(IdentifierArgumentType.getIdentifier(context, "quest_id"));
 
         try {
-            context.getSource().sendFeedback(Text.literal(QuestState.getQuestInstance(quest, context.getSource().getWorld()).getTime() + " ticks"), false);
+            context.getSource().sendFeedback(() -> Text.literal(QuestState.getQuestInstance(quest, context.getSource().getWorld()).getTime() + " ticks"), false);
             return 0;
         } catch (Exception e) {
             context.getSource().sendError(Text.literal(e.getMessage()));
@@ -64,7 +64,7 @@ public class QuestCommand {
                     Quest.byId(IdentifierArgumentType.getIdentifier(context, "quest_id")),
                     IntegerArgumentType.getInteger(context, "time") * multiplier,
                     context.getSource().getServer());
-            context.getSource().sendFeedback(Text.literal("Successfully!"), false);
+            context.getSource().sendFeedback(() -> Text.literal("Successfully!"), false);
             return 0;
         } catch (Exception e) {
             context.getSource().sendError(Text.literal(e.getMessage()));
@@ -79,7 +79,7 @@ public class QuestCommand {
                     quest,
                     quest.getDefaultTime().getTime(),
                     context.getSource().getServer());
-            context.getSource().sendFeedback(Text.literal("Successfully!"), false);
+            context.getSource().sendFeedback(() -> Text.literal("Successfully!"), false);
             return 0;
         } catch (Exception e) {
             context.getSource().sendError(Text.literal(e.getMessage()));
@@ -93,7 +93,7 @@ public class QuestCommand {
                     Quest.byId(IdentifierArgumentType.getIdentifier(context, "quest_id")),
                     QuestStatus.valueOf(StringArgumentType.getString(context, "status").toUpperCase()),
                     context.getSource().getServer());
-            context.getSource().sendFeedback(Text.literal("Successfully!"), false);
+            context.getSource().sendFeedback(() -> Text.literal("Successfully!"), false);
             return 0;
         } catch (Exception e) {
             context.getSource().sendError(Text.literal(e.getMessage()));
@@ -105,7 +105,7 @@ public class QuestCommand {
         Quest quest = Quest.byId(IdentifierArgumentType.getIdentifier(context, "quest_id"));
 
         try {
-            context.getSource().sendFeedback(QuestState.getQuestInstance(quest, context.getSource().getWorld()).getStatus().asText(), false);
+            context.getSource().sendFeedback(() -> QuestState.getQuestInstance(quest, context.getSource().getWorld()).getStatus().asText(), false);
             return 0;
         } catch (Exception e) {
             context.getSource().sendError(Text.literal(e.getMessage()));
@@ -118,7 +118,7 @@ public class QuestCommand {
 
         try {
             QuestState.setQuestInstance(quest, new QuestInstance(quest, QuestStatus.NOT_STARTED), context.getSource().getServer());
-            context.getSource().sendFeedback(Text.literal("Successfully!"), false);
+            context.getSource().sendFeedback(() -> Text.literal("Successfully!"), false);
             return 0;
         } catch (Exception e) {
             context.getSource().sendError(Text.literal(e.getMessage()));

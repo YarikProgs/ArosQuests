@@ -3,28 +3,32 @@ package net.aros.arosquests;
 import net.aros.arosquests.commands.QuestCommand;
 import net.aros.arosquests.init.AQItems;
 import net.aros.arosquests.init.AQQuests;
-import net.aros.arosquests.init.AQScreenHandlers;
-import net.aros.arosquests.network.ModMessages;
+import net.aros.arosquests.payloads.CollectQuestsPayload;
+import net.aros.arosquests.payloads.OpenQuestsPayload;
 import net.aros.arosquests.util.AQRegistry;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
+import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ArosQuests implements ModInitializer {
-	public static final String MOD_ID = "arosquests";
-	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
+    public static final String MOD_ID = "arosquests";
+    public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
-	@Override
-	public void onInitialize() {
-		LOGGER.info("Hello Aros Quests!");
+    @Override
+    public void onInitialize() {
+        LOGGER.info("Hello Aros Quests!");
 
-		AQRegistry.init();
-		AQQuests.init();
-		AQItems.init();
-		AQScreenHandlers.init();
-		ModMessages.registerC2SPackets();
+        AQRegistry.init();
+        AQQuests.init();
+        AQItems.init();
 
-		CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> QuestCommand.register(dispatcher));
-	}
+        PayloadTypeRegistry.playC2S().register(OpenQuestsPayload.ID, OpenQuestsPayload.CODEC);
+        PayloadTypeRegistry.playC2S().register(CollectQuestsPayload.ID, CollectQuestsPayload.CODEC);
+
+        ServerPlayNetworking.registerGlobalReceiver(CollectQuestsPayload.ID, (payload, ctx) -> CollectQuestsPayload.receive(ctx.player()));
+        CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> QuestCommand.register(dispatcher));
+    }
 }

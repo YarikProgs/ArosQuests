@@ -4,7 +4,9 @@ import net.aros.arosquests.quests.base.Quest;
 import net.aros.arosquests.util.AQRegistry;
 import net.aros.arosquests.util.QuestInstance;
 import net.aros.arosquests.util.QuestStatus;
+import net.minecraft.datafixer.DataFixTypes;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
@@ -17,10 +19,10 @@ import java.util.Map;
 import static net.aros.arosquests.ArosQuests.MOD_ID;
 
 public class QuestState extends PersistentState {
-    private Map<Quest, QuestInstance> QUEST_DATA = genQuests();
+    private final Map<Quest, QuestInstance> QUEST_DATA = genQuests();
 
     @Override
-    public NbtCompound writeNbt(NbtCompound nbt) {
+    public NbtCompound writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup lookup) {
         NbtCompound questData = new NbtCompound();
         for (Quest quest : QUEST_DATA.keySet()) {
             QuestInstance instance = QUEST_DATA.get(quest);
@@ -35,7 +37,7 @@ public class QuestState extends PersistentState {
         return nbt;
     }
 
-    private static QuestState fromNbt(NbtCompound nbt) {
+    private static QuestState fromNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup lookup) {
         QuestState state = new QuestState();
 
         // {"QuestData": {"arosquest:example": {"Status": 1, "Time": 100}, ...}}
@@ -43,7 +45,7 @@ public class QuestState extends PersistentState {
         NbtCompound questData = nbt.getCompound("QuestData");
         for (String questN : questData.getKeys()) {
             NbtCompound questInstanceData = questData.getCompound(questN);
-            Quest quest = Quest.byId(new Identifier(questN));
+            Quest quest = Quest.byId(Identifier.of(questN));
 
             state.QUEST_DATA.put(quest, new QuestInstance(quest, QuestStatus.byInt(questInstanceData.getInt("Status")), questInstanceData.getInt("Time")));
         }
@@ -52,9 +54,8 @@ public class QuestState extends PersistentState {
 
     private static QuestState getQuestState(ServerWorld world) {
         return world.getPersistentStateManager().getOrCreate(
-                QuestState::fromNbt,
-                QuestState::new,
-                MOD_ID
+            new Type<>(QuestState::new, QuestState::fromNbt, DataFixTypes.LEVEL),
+            MOD_ID
         );
     }
 

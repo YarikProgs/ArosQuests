@@ -38,5 +38,5 @@ QuestState.setQuestIntance(Quest quest, QuestInstance instance, MinecraftServer 
 
 ### Крутой экран квестов
 Экран синхронизирован между всемя игроками сервера (т.к. хранится в .dat файлах)
-![](img.png)
-![](img2.png)
+![](imgs/img.png)
+![](imgs/img2.png)

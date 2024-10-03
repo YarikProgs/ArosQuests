@@ -3,12 +3,11 @@ package net.aros.arosquests.util;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import static net.aros.arosquests.ArosQuests.MOD_ID;
 
 public enum QuestStatus {
-    NOT_STARTED(0, -1,null),
+    NOT_STARTED(0, -1, null),
     COMPLETING(1, 3, Formatting.WHITE.getColorValue()),
     COMPLETED(2, 1, Formatting.GRAY.getColorValue()),
     FAILED(3, 0, 13202805),

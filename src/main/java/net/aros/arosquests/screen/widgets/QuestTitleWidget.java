@@ -30,14 +30,15 @@ public class QuestTitleWidget extends ClickableWidget { // Мне лично у�
     private final LivingEntity entity;
     private final int x, y;
 
-    public QuestTitleWidget(int x, int y, QuestInstance instance, TextRenderer renderer) {
+    public QuestTitleWidget(int x, int y, @NotNull QuestInstance instance, @NotNull TextRenderer renderer) {
         super(x, y, Math.round(renderer.getWidth(instance.getQuest().getName()) * 1.5F), 12, Text.empty());
         this.x = x;
         this.y = y;
         this.renderer = renderer;
         this.instance = instance;
-        this.entity = instance.getQuest().getAuthorEntityType() == EntityType.PLAYER ? MinecraftClient.getInstance().player :
-            instance.getQuest().getAuthorEntity(MinecraftClient.getInstance().world);
+        this.entity = instance.getQuest().getAuthorEntityType() == null ? null : instance.getQuest().getAuthorEntityType() == EntityType.PLAYER
+            ? MinecraftClient.getInstance().player
+            : instance.getQuest().getAuthorEntityType().create(MinecraftClient.getInstance().world);
     }
 
     // А зачем тут кнопка?
@@ -119,6 +120,7 @@ public class QuestTitleWidget extends ClickableWidget { // Мне лично у�
     }
 
     // Удобненько
+    @SuppressWarnings("SameParameterValue")
     protected void drawTextWithSize(DrawContext ctx, Text text, float x, float y, Integer color, float size) {
         ctx.getMatrices().scale(size, size, size);
         ctx.drawTextWithShadow(renderer, text, (int) (x / size), (int) (y / size), color);
@@ -126,6 +128,7 @@ public class QuestTitleWidget extends ClickableWidget { // Мне лично у�
     }
 
     // Очень удобненько
+    @SuppressWarnings("SameParameterValue")
     protected void drawCenteredTextWithSize(@NotNull DrawContext ctx, @NotNull Text text, float x, float y, Integer color, float size) {
         ctx.getMatrices().scale(size, size, size);
         renderer.draw(text.asOrderedText(), (x - renderer.getWidth(text) / 2.0F) / size - 7, y / size, color,

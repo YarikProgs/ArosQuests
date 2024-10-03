@@ -8,18 +8,19 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
-import net.minecraft.world.World;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import static net.aros.arosquests.ArosQuests.MOD_ID;
 
-public class SimpleQuest extends Quest {
+@SuppressWarnings("unused")
+public class SimpleQuest implements Quest {
     private final Text name, author, description;
     private final QuestTime defaultTime;
-    private final Integer authorColor;
+    private final int authorColor;
     private final EntityType<? extends LivingEntity> authorEntity;
 
-    public SimpleQuest(Text name, Text author, @Nullable EntityType<? extends LivingEntity> authorEntity, Integer authorColor, Text description, QuestTime defaultTime) {
+    public SimpleQuest(Text name, Text author, @Nullable EntityType<? extends LivingEntity> authorEntity, int authorColor, Text description, QuestTime defaultTime) {
         this.name = name;
         this.author = author;
         this.authorEntity = authorEntity;
@@ -38,19 +39,13 @@ public class SimpleQuest extends Quest {
         return author;
     }
 
-    @Nullable
-    @Override
-    public LivingEntity getAuthorEntity(World world) {
-        return authorEntity == null ? null : authorEntity.create(world);
-    }
-
     @Override
     public @Nullable EntityType<? extends LivingEntity> getAuthorEntityType() {
         return authorEntity;
     }
 
     @Override
-    public Integer getAuthorColor() {
+    public int getAuthorColor() {
         return authorColor;
     }
 
@@ -65,12 +60,12 @@ public class SimpleQuest extends Quest {
     }
 
     @Override
-    public void onStatusChange(QuestStatus status, MinecraftServer server) {
+    public void onStatusChange(QuestStatus status, @NotNull MinecraftServer server) {
         server.getPlayerManager().getPlayerList().forEach(player -> player.sendMessage(Text.translatable("quest." + MOD_ID + ".update").fillStyle(Style.EMPTY.withItalic(true)), true));
     }
 
     @Override
-    public void onTimeout(MinecraftServer server, QuestInstance instance) {
+    public void onTimeout(MinecraftServer server, @NotNull QuestInstance instance) {
         instance.setStatus(QuestStatus.FAILED, server);
     }
 }

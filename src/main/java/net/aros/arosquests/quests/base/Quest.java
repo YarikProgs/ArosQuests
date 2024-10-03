@@ -9,26 +9,30 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-public abstract class Quest {
-    public abstract Text getName();
-    public abstract Text getAuthor();
-    public abstract Integer getAuthorColor();
-    public abstract @Nullable LivingEntity getAuthorEntity(World world);
-    public abstract @Nullable EntityType<? extends LivingEntity> getAuthorEntityType();
-    public abstract Text getDescription();
-    public abstract QuestTime getDefaultTime();
+public interface Quest {
+    Text getName();
 
-    public final Identifier getId() {
+    Text getAuthor();
+
+    int getAuthorColor();
+
+    @Nullable EntityType<? extends LivingEntity> getAuthorEntityType();
+
+    Text getDescription();
+
+    QuestTime getDefaultTime();
+
+    void onStatusChange(QuestStatus status, MinecraftServer server);
+
+    void onTimeout(MinecraftServer server, QuestInstance instance);
+
+    default Identifier getId() {
         return AQRegistry.QUESTS.getId(this);
     }
 
-    public static Quest byId(Identifier id) {
+    static Quest byId(Identifier id) {
         return AQRegistry.QUESTS.get(id);
     }
-
-    public abstract void onStatusChange(QuestStatus status, MinecraftServer server);
-    public abstract void onTimeout(MinecraftServer server, QuestInstance instance);
 }

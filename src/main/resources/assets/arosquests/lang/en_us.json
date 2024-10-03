@@ -1,0 +1,22 @@
+{
+  "quest.arosquests.update": "Quest list was updated",
+
+  "time.arosquests.seconds": "Seconds",
+  "time.arosquests.minutes": "Minutes",
+  "time.arosquests.hours": "Hours",
+  "time.arosquests.minecraft_day": "Minecraft days",
+  "time.arosquests.real_days": "Real days",
+  "time.arosquests.infinite": "Infinite",
+
+  "status.arosquests.not_started": "Not started",
+  "status.arosquests.completing": "Completing...",
+  "status.arosquests.completed": "Completed",
+  "status.arosquests.failed": "Failed",
+  "status.arosquests.frozen": "Frozen",
+
+  "quest.arosquests.author": "Author",
+  "quest.arosquests.status": "Status",
+  "quest.arosquests.description": "Description",
+  "quest.arosquests.description.empty": "Empty",
+  "quest.arosquests.time": "Deadline: "
+}

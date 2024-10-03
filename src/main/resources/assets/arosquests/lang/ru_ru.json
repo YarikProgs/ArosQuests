@@ -17,6 +17,6 @@
   "quest.arosquests.author": "Квестодатель",
   "quest.arosquests.status": "Статус",
   "quest.arosquests.description": "Описание",
-  "quest.arosquests.description.empty": "*пусто*",
+  "quest.arosquests.description.empty": "Пусто",
   "quest.arosquests.time": "Срок выполнения: "
 }

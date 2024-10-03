@@ -9,6 +9,8 @@ import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.network.packet.CustomPayload;
 import net.minecraft.util.Identifier;
+import net.neoforged.neoforge.network.handling.ClientPayloadContext;
+import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 import java.util.Collection;
 
@@ -32,8 +34,8 @@ public record OpenQuestsPayload(Collection<QuestInstance> quests) implements Cus
         });
     }
 
-    public static void receive(MinecraftClient client, OpenQuestsPayload payload) {
-        client.execute(() -> client.setScreen(new QuestScreen(payload.quests)));
+    public static void receive(OpenQuestsPayload payload, IPayloadContext ignored) {
+        MinecraftClient.getInstance().execute(() -> MinecraftClient.getInstance().setScreen(new QuestScreen(payload.quests)));
     }
 
     @Override

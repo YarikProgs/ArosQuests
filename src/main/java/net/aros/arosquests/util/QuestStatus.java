@@ -2,6 +2,7 @@ package net.aros.arosquests.util;
 
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import static net.aros.arosquests.ArosQuests.MOD_ID;
@@ -27,10 +28,10 @@ public enum QuestStatus {
         return value;
     }
 
-    @Nullable
+    @NotNull
     public static QuestStatus byInt(int value) {
         for (QuestStatus status : values()) if (status.value == value) return status;
-        return null;
+        throw new IllegalArgumentException();
     }
 
     @Override

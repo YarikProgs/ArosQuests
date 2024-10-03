@@ -22,11 +22,11 @@ public abstract class Quest {
     public abstract QuestTime getDefaultTime();
 
     public final Identifier getId() {
-        return AQRegistry.QUEST.getId(this);
+        return AQRegistry.QUESTS.getId(this);
     }
 
     public static Quest byId(Identifier id) {
-        return AQRegistry.QUEST.get(id);
+        return AQRegistry.QUESTS.get(id);
     }
 
     public abstract void onStatusChange(QuestStatus status, MinecraftServer server);

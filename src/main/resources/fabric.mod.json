@@ -22,7 +22,7 @@
       "net.aros.arosquests.ArosQuests"
     ],
     "client": [
-      "net.aros.arosquests.ArosQuestsClient"
+      "net.aros.arosquests.ArosQuestsClientEvents"
     ]
   },
   "mixins": [

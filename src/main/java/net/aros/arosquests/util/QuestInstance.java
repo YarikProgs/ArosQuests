@@ -1,10 +1,16 @@
 package net.aros.arosquests.util;
 
 import net.aros.arosquests.quests.base.Quest;
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
+import net.aros.arosquests.world.QuestState;
 import net.minecraft.server.MinecraftServer;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.tick.ServerTickEvent;
 import org.jetbrains.annotations.NotNull;
 
+import static net.aros.arosquests.ArosQuests.MOD_ID;
+
+@EventBusSubscriber(modid = MOD_ID)
 public final class QuestInstance {
     private final Quest quest;
     private QuestStatus status;
@@ -19,8 +25,6 @@ public final class QuestInstance {
         this.quest = quest;
         this.status = status;
         this.time = time;
-
-        ServerTickEvents.START_SERVER_TICK.register(this::tick);
     }
 
     public Quest getQuest() {
@@ -44,11 +48,15 @@ public final class QuestInstance {
         this.quest.onStatusChange(status, server);
     }
 
-    private void tick(MinecraftServer server) {
-        if (status == QuestStatus.COMPLETING && time != -1 && time > 0) {
-            time--;
+    @SubscribeEvent
+    @SuppressWarnings("unused")
+    public static void tick(ServerTickEvent.@NotNull Post event) {
+        for (QuestInstance instance : QuestState.getQuestData(event.getServer()).values()) {
+            if (instance.status == QuestStatus.COMPLETING && instance.time > 0) {
+                instance.time--;
 
-            if (time == 0) quest.onTimeout(server, this);
+                if (instance.time == 0) instance.quest.onTimeout(event.getServer(), instance);
+            }
         }
     }
 }
